@@ -45,28 +45,38 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         {/* Navigation Icons */}
         <Link to="/dashboard" className="nav-btn" title="Dashboard">
-          <FaBullseye />
+             <FaBullseye className="nav-icon" />
+          <span className="nav-label">Dashboard</span>
         </Link>
 
-        <Link to="/campaign-dashboard" className="nav-btn" title="Campaign Dashboard">
-          <FaChartBar />
+        <Link
+          to="/campaign-dashboard"
+          className="nav-btn"
+          title="Campaign Dashboard"
+        >
+          <FaChartBar className="nav-icon" />
+          <span className="nav-label">Campaign Dashboard</span>
         </Link>
 
         <Link to="/create-campaign" className="nav-btn" title="Create Campaign">
-          <FaPlusCircle />
+          <FaPlusCircle className="nav-icon" />
+          <span className="nav-label">Create Campaign</span>
         </Link>
 
         <Link to="/run-campaign" className="nav-btn" title="Run Campaign">
-          <FaPlayCircle />
+         <FaPlayCircle className="nav-icon" />
+          <span className="nav-label">Run Campaign</span>
         </Link>
 
         <Link to="/template" className="nav-btn" title="Template Creation">
-          <FaFileAlt />
+           <FaFileAlt className="nav-icon" />
+          <span className="nav-label">Template Creation</span>
         </Link>
 
         {/* Logout */}
         <button className="nav-btn" onClick={handleLogout} title="Logout">
-          <FaSignOutAlt />
+           <FaSignOutAlt className="nav-icon" />
+          <span className="nav-label">Logout</span>
         </button>
       </aside>
 
