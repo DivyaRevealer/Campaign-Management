@@ -52,11 +52,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <FaChartBar />
         </Link>
 
-        <Link to="/createcampaign" className="nav-btn" title="Create Campaign">
+        <Link to="/create-campaign" className="nav-btn" title="Create Campaign">
           <FaPlusCircle />
         </Link>
 
-        <Link to="/runcampaign" className="nav-btn" title="Run Campaign">
+        <Link to="/run-campaign" className="nav-btn" title="Run Campaign">
           <FaPlayCircle />
         </Link>
 
