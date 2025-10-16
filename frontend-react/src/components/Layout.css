@@ -254,8 +254,18 @@
   height: 60px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   font-size: 1.2rem;
+}
+
+.header-title {
+  font-weight: 600;
+}
+
+.header-username {
+  font-size: 1rem;
+  font-weight: 500;
 }
 .content {
   flex: 1;

@@ -25,6 +25,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     window.location.href = "/login";
   };
 
+  const username = localStorage.getItem("username") || "";
+
+  const displayName = username ? `Welcome, ${username}` : "Welcome";
+
   return (
     <div className={`layout ${collapsed ? "collapsed" : ""}`}>
       <aside
@@ -82,7 +86,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Main Content Wrapper */}
       <div className="main">
-        <header className="header">Target Achievement Analysis</header>
+         <header className="header">
+          <span className="header-title">Target Achievement Analysis</span>
+          <span className="header-username">{displayName}</span>
+        </header>
+        {/* <header className="header">Target Achievement Analysis</header> */}
         <div className="content">{children}</div>
       </div>
     </div>
