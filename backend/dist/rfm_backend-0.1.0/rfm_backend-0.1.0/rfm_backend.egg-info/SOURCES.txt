@@ -1,0 +1,110 @@
+README.txt
+database.py
+main.py
+pyproject.toml
+./database.py
+./main.py
+./app/__init__.py
+./auth/__init__.py
+./auth/jwt.py
+./controllers/__init__.py
+./controllers/auth.py
+./controllers/campaign.py
+./controllers/dashboard - Copy.py
+./controllers/dashboard.py
+./controllers/filters.py
+./controllers/campaign/__init__.py
+./controllers/campaign/campaign_controller.py
+./controllers/campaign/template_controller.py
+./models/__init__.py
+./models/crm_analysis.py
+./models/crm_analysis_backup.py
+./models/user.py
+./models/campaign/__init__.py
+./models/campaign/brand_detail_model.py
+./models/campaign/brand_filter_model.py
+./models/campaign/campaign_model.py
+./models/campaign/geography_model.py
+./models/campaign/rfm_detail_model.py
+./models/campaign/template_detail_model.py
+./models/campaign/upload_contact_model.py
+./routers/__init__.py
+./routers/campaign/__init__.py
+./routers/campaign/campaign_router - 5L_rows.py
+./routers/campaign/campaign_router.py
+./routers/campaign/template_router - Before Decoupling API details.py
+./routers/campaign/template_router - Copy.py
+./routers/campaign/template_router - Sep_04.py
+./routers/campaign/template_router - With Watsapp API.py
+./routers/campaign/template_router - with Image and video.py
+./routers/campaign/template_router - with env.py
+./routers/campaign/template_router.py
+./schemas/Options.py
+./schemas/__init__.py
+./schemas/campaign.py
+./schemas/crm_analysis.py
+./schemas/crm_analysis_backup.py
+./schemas/filters.py
+./schemas/user.py
+./schemas/campaign/__init__.py
+./schemas/campaign/campaign_schema.py
+./utils/__init__.py
+./utils/api_endpoints.py
+./utils/file_server.py
+./utils/whatsapp - Copy.py
+./utils/whatsapp - With digi valley api.py
+./utils/whatsapp.py
+app/__init__.py
+auth/__init__.py
+auth/jwt.py
+controllers/__init__.py
+controllers/auth.py
+controllers/campaign.py
+controllers/dashboard - Copy.py
+controllers/dashboard.py
+controllers/filters.py
+controllers/campaign/__init__.py
+controllers/campaign/campaign_controller.py
+controllers/campaign/template_controller.py
+models/__init__.py
+models/crm_analysis.py
+models/crm_analysis_backup.py
+models/user.py
+models/campaign/__init__.py
+models/campaign/brand_detail_model.py
+models/campaign/brand_filter_model.py
+models/campaign/campaign_model.py
+models/campaign/geography_model.py
+models/campaign/rfm_detail_model.py
+models/campaign/template_detail_model.py
+models/campaign/upload_contact_model.py
+rfm_backend.egg-info/PKG-INFO
+rfm_backend.egg-info/SOURCES.txt
+rfm_backend.egg-info/dependency_links.txt
+rfm_backend.egg-info/top_level.txt
+routers/__init__.py
+routers/campaign/__init__.py
+routers/campaign/campaign_router - 5L_rows.py
+routers/campaign/campaign_router.py
+routers/campaign/template_router - Before Decoupling API details.py
+routers/campaign/template_router - Copy.py
+routers/campaign/template_router - Sep_04.py
+routers/campaign/template_router - With Watsapp API.py
+routers/campaign/template_router - with Image and video.py
+routers/campaign/template_router - with env.py
+routers/campaign/template_router.py
+schemas/Options.py
+schemas/__init__.py
+schemas/campaign.py
+schemas/crm_analysis.py
+schemas/crm_analysis_backup.py
+schemas/filters.py
+schemas/user.py
+schemas/campaign/__init__.py
+schemas/campaign/campaign_schema.py
+utils/__init__.py
+utils/api_endpoints.py
+utils/file_server.py
+utils/whatsapp - Copy.py
+utils/whatsapp - With digi valley api.py
+utils/whatsapp.py

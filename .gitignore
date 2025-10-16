@@ -1,0 +1,58 @@
+node_modules/
+
+# Virtual environment
+venv/
+
+# Migration
+migrations/
+#production build
+build/
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# IDE or Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment configuration
+instance/config.py
+
+# Generated files
+*.pyc
+.pytest_cache/
+
+# Log files
+*.log
+
+# Compiled assets
+/static/css/*.css
+/static/js/*.js
+
+# Database files
+*.db
+*.sqlite
+
+# Environment variables
+.env
+
+# macOS system files
+.DS_Store
+
+# Dummy
+extra/
+
+# tmpfolder
+src/assets/tmp
+
+src/backend/.env
+
+echo "README.zip" >> .gitignore
+echo "build_backend.zip" >> .gitignore"README.zip" 
+"build_BE.zip" 
+"build_BE.zip" 
+
+open-wa-session*.json
+session.data.json

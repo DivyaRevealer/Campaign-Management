@@ -1,0 +1,49 @@
+/* Table wrapper */
+.custom-table {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: #fff;
+}
+
+/* Header styling */
+.custom-table .ant-table-thead > tr > th {
+  background: linear-gradient(135deg, #06beb6, #48b1bf);
+  color: #fff;
+  font-weight: 700;   /* ✅ bold header */
+  text-align: center;
+  font-size: 14px;
+  padding: 12px;
+  border: none;
+}
+
+/* Row styling */
+.custom-table .ant-table-tbody > tr > td {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;   /* ✅ bold rows */
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Hover effect */
+.custom-table .ant-table-tbody > tr:hover > td {
+  background: #f6ffed !important;
+  cursor: pointer;
+}
+
+/* Alternate row colors */
+.custom-table .ant-table-tbody > tr:nth-child(odd) > td {
+  background: #fafafa;
+}
+
+/* Action icons (sync/preview) */
+.custom-table .anticon {
+  font-size: 18px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.custom-table .anticon:hover {
+  transform: scale(1.2);
+  color: #1890ff;
+}

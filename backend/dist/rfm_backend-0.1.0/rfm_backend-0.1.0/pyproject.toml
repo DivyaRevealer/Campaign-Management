@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rfm-backend"
+version = "0.1.0"
+description = "RFM FastAPI backend"
+requires-python = ">=3.10"
+
+[tool.setuptools]
+package-dir = { "" = "." }
+py-modules = ["main", "database"]
+
+
+[tool.setuptools.packages.find]
+where = ["."]
+# Don't use wildcards - be explicit about package names
+include = [
+    "app*",
+    "auth*",
+    "controllers*",
+    "models*",
+    "routers*",
+    "schemas*",
+    "utils*",
+]

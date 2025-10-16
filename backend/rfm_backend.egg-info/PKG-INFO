@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: rfm-backend
+Version: 0.1.0
+Summary: RFM FastAPI backend
+Requires-Python: >=3.10

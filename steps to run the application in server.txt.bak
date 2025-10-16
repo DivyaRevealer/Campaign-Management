@@ -1,0 +1,13 @@
+py -3.10 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+python -m ensurepip --upgrade
+pip install --upgrade pip
+pip install -r requirements.txt
+pip install .\rfm_backend-0.1.0-py3-none-any.whl
+# (no wheel needed, just run Uvicorn)
+uvicorn main:app --host 0.0.0.0 --port 4001
+
+
+copy the frontend build inside nginx folder
+go to the folder where nginx is there. then start .\nginx.exe 
