@@ -82,7 +82,67 @@ interface BarItem {
 type SegmentItem = TreemapDataType & {
   name: string;
   value: number;
- 
+  fill: string;
+};
+
+interface TreemapNodeProps extends TreemapDataType {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  index: number;
+  depth: number;
+  fill: string;
+  name: string;
+  value: number;
+}
+
+const CustomizedTreemapContent: React.FC<TreemapNodeProps> = ({
+  x,
+  y,
+  width,
+  height,
+  name,
+  value,
+  fill,
+  depth,
+}) => {
+  if (depth === 0) {
+    return null;
+  }
+
+  const centerX = x + width / 2;
+  const centerY = y + height / 2;
+  const textColor = depth < 2 ? "#ffffff" : "#000000";
+
+  return (
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fill={fill}
+        stroke="#ffffff"
+        strokeWidth={1}
+        rx={4}
+        ry={4}
+      />
+      {width > 30 && height > 20 && (
+        <text
+          x={centerX}
+          y={centerY}
+          fill={textColor}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={12}
+          fontWeight={600}
+        >
+          {`${name}: ${value}`}
+        </text>
+      )}
+    </g>
+  );
 };
 
 interface CustomerPercentItem {
@@ -292,7 +352,13 @@ const Dashboard: React.FC = () => {
       ]);
 
       computeMetrics(res.data);
-      setSegmentData(chartsRes.data.segmentData || []);
+       const segments: SegmentItem[] = (chartsRes.data.segmentData || []).map(
+        (item: { name: string; value: number }, index: number) => ({
+          ...item,
+          fill: COLORS[index % COLORS.length],
+        })
+      );
+      setSegmentData(segments);
       setDaysBucketData(chartsRes.data.daysBucketData || []);
       setCustomerPercentData(chartsRes.data.customerPercentData || []);
     } catch (err) {
@@ -516,26 +582,21 @@ const Dashboard: React.FC = () => {
             {/* ── Total Customer by Segment ───────────────────────── */}
             <div className="chart-container">
               <h4>Total Customer by Segment</h4>
-              <ResponsiveContainer width="100%" height={300}>
-                 <Treemap
+               {segmentData.length ? (
+                <ResponsiveContainer width="100%" height={300}>
+                  <Treemap
                     data={segmentData}
                     dataKey="value"
                     nameKey="name"
-                    aspectRatio={4 / 3}
-                    content={({ name, value }) => (
-                    <text
-                        x={0}
-                        y={0}
-                        fill="#000"
-                        fontSize={12}
-                        fontWeight="bold"
-                        textAnchor="middle"
-                    >
-                        {`${name}: ${value}`}
-                    </text>
-                    )}
-                />
-              </ResponsiveContainer>
+                    stroke="#ffffff"
+                    isAnimationActive={false}
+                    content={<CustomizedTreemapContent x={0} y={0} width={0} height={0} index={0} depth={0} fill={""} name={""} value={0} />}
+                  />
+                </ResponsiveContainer>
+              ) : (
+                <div className="empty-state">No segment data available.</div>
+              )}
+             
             </div>
 
             {/* ── Days to Return Bucket ────────────────────────────── */}
