@@ -18,6 +18,7 @@ import {
   Line,
   ResponsiveContainer,
 } from "recharts";
+import type { TreemapDataType } from "recharts/types/chart/Treemap";
 import "./Dashboard.css";
 
 const { RangePicker } = DatePicker;
@@ -78,10 +79,11 @@ interface BarItem {
   [key: string]: string | number;
 }
 
-interface SegmentItem {
+type SegmentItem = TreemapDataType & {
   name: string;
   value: number;
-}
+ 
+};
 
 interface CustomerPercentItem {
   year: string;
@@ -515,22 +517,24 @@ const Dashboard: React.FC = () => {
             <div className="chart-container">
               <h4>Total Customer by Segment</h4>
               <ResponsiveContainer width="100%" height={300}>
-                <Treemap
-                  data={segmentData}
-                  dataKey="value"
-                  nameKey="name"
-                  
-                  aspectRatio={4 / 3}
-                  label={{
-                    fill: '#000',
-                    stroke: 'none',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    position: 'center'
-                  }}
-                  >
-                 
-               </Treemap>
+                 <Treemap
+                    data={segmentData}
+                    dataKey="value"
+                    nameKey="name"
+                    aspectRatio={4 / 3}
+                    content={({ name, value }) => (
+                    <text
+                        x={0}
+                        y={0}
+                        fill="#000"
+                        fontSize={12}
+                        fontWeight="bold"
+                        textAnchor="middle"
+                    >
+                        {`${name}: ${value}`}
+                    </text>
+                    )}
+                />
               </ResponsiveContainer>
             </div>
 
