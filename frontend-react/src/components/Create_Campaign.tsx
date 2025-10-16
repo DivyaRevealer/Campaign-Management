@@ -54,13 +54,14 @@ interface CampaignOptions {
   items: string[];
   brand_hierarchy: BrandHierarchyEntry[];
 }
+type BasedOnOption = "Customer Base" | "upload";
 
 interface CampaignData {
   id?: number;
   name: string;
   start_date: string;
   end_date: string;
-  based_on: string;
+  based_on: BasedOnOption;
   [key: string]: any;
 }
 type DateRangeValue = [Dayjs, Dayjs] | null;
@@ -78,7 +79,7 @@ interface PurchaseTypeFormValue {
 interface FormValues {
   name: string;
   campaignPeriod: [Dayjs, Dayjs];
-  basedOn: string;
+   basedOn: BasedOnOption;
   recencyOp?: string;
   recencyMin?: number;
   recencyMax?: number;
@@ -144,10 +145,9 @@ const CreateCampaign: React.FC = () => {
   const [uploadFile, setUploadFile] = useState<File | null>(null);
 
   // ---------- watch ----------
-  const watchBasedOn: string = Form.useWatch("basedOn", form) || "Customer Base";
+  const watchBasedOn: BasedOnOption = Form.useWatch<BasedOnOption>("basedOn", form) ?? "Customer Base";
   const watchName: string = Form.useWatch("name", form) || "";
-
-   const watchBranch: string[] = Form.useWatch("branch", form) || [];
+ const watchBranch: string[] = Form.useWatch("branch", form) || [];
   const watchCity: string[] = Form.useWatch("city", form) || [];
   const watchState: string[] = Form.useWatch("state", form) || [];
   const watchPurchaseBrand: string[] = Form.useWatch("purchaseBrand", form) || [];
@@ -155,7 +155,9 @@ const CreateCampaign: React.FC = () => {
   const watchProduct: string[] = Form.useWatch("product", form) || [];
   const watchModel: string[] = Form.useWatch("model", form) || [];
   const watchItem: string[] = Form.useWatch("item", form) || [];
-  const watchValueThreshold: number | null = Form.useWatch("valueThreshold", form);
+  const watchValueThreshold: number | null =
+    Form.useWatch<number | null>("valueThreshold", form) ?? null;
+
 
   const {
     branches,
@@ -178,6 +180,16 @@ const CreateCampaign: React.FC = () => {
   const toRange = (s?: string | null, e?: string | null): DateRangeValue => {
     const clean = (value?: string | null) =>
       typeof value === "string" ? value.replace(/^['"]+|['"]+$/g, "") : value;
+    const start = clean(s);
+    const end = clean(e);
+
+    if (!start || !end) {
+      return null;
+    }
+
+    return [dayjs(start), dayjs(end)];
+  };
+
 
   // ---------- load options ----------
 
@@ -689,7 +701,7 @@ const CreateCampaign: React.FC = () => {
                       label="Branch"
                       placeholder="Select branches"
                       optionsProvider={() => computeGeoOptions().allowedBranches}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -705,7 +717,7 @@ const CreateCampaign: React.FC = () => {
                       label="City"
                       placeholder="Select cities"
                       optionsProvider={() => computeGeoOptions().allowedCities}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -721,7 +733,7 @@ const CreateCampaign: React.FC = () => {
                       label="State"
                       placeholder="Select states"
                       optionsProvider={() => computeGeoOptions().allowedStates}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -973,12 +985,12 @@ const CreateCampaign: React.FC = () => {
                     <Space>
                       <span>Any Purchase</span>
                       <Form.Item name={["purchaseType", "anyPurchase"]} valuePropName="checked" noStyle>
-                        <Switch disabled={watchBasedOn === "upload"} />
+                        <Switch disabled={(watchBasedOn as string) === "upload"} />
                       </Form.Item>
 
                       <span>Recent Purchase</span>
                       <Form.Item name={["purchaseType", "recentPurchase"]} valuePropName="checked" noStyle>
-                        <Switch disabled={watchBasedOn === "upload"} />
+                        <Switch disabled={(watchBasedOn as string) === "upload"} />
                       </Form.Item>
                     </Space>
                   </Form.Item>
@@ -1012,7 +1024,7 @@ const CreateCampaign: React.FC = () => {
                       label="Brand"
                       placeholder="Select brands"
                       optionsProvider={() => computeBrandOptions().allowedBrands}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -1034,7 +1046,7 @@ const CreateCampaign: React.FC = () => {
                       label="Section"
                       placeholder="Select sections"
                       optionsProvider={() => computeBrandOptions().allowedSections}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -1056,7 +1068,7 @@ const CreateCampaign: React.FC = () => {
                       label="Product"
                       placeholder="Select products"
                       optionsProvider={() => computeBrandOptions().allowedProducts}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -1078,7 +1090,7 @@ const CreateCampaign: React.FC = () => {
                       label="Model"
                       placeholder="Select models"
                       optionsProvider={() => computeBrandOptions().allowedModels}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -1100,7 +1112,7 @@ const CreateCampaign: React.FC = () => {
                       label="Item"
                       placeholder="Select items"
                       optionsProvider={() => computeBrandOptions().allowedItems}
-                      disabled={watchBasedOn === "upload"}
+                      disabled={(watchBasedOn as string) === "upload"}
                     />
                   )}
                 </Form.Item>
@@ -1113,7 +1125,7 @@ const CreateCampaign: React.FC = () => {
                     formatter={(value) => `₹ ${value}`}
                     min={0}
                     placeholder="e.g. ≥ 50000"
-                    disabled={watchBasedOn === "upload"}
+                    disabled={(watchBasedOn as string) === "upload"}
                   />
                 </Form.Item>
               </Col>
@@ -1122,12 +1134,12 @@ const CreateCampaign: React.FC = () => {
             <Row gutter={8} style={{ marginTop: 8 }}>
               <Col flex="200px">
                 <Form.Item name="birthdayRange" label="Birthday Range" style={{ marginBottom: 8 }}>
-                  <RangePicker style={{ width: "100%" }} disabled={watchBasedOn === "upload"} />
+                  <RangePicker style={{ width: "100%" }} disabled={(watchBasedOn as string) === "upload"} />
                 </Form.Item>
               </Col>
               <Col flex="180px">
                 <Form.Item name="anniversaryRange" label="Anniversary Range" style={{ marginBottom: 0 }}>
-                  <RangePicker style={{ width: "100%" }} disabled={watchBasedOn === "upload"} />
+                  <RangePicker style={{ width: "100%" }} disabled={(watchBasedOn as string) === "upload"} />
                 </Form.Item>
               </Col>
             </Row>

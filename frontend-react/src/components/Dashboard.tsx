@@ -82,38 +82,50 @@ interface BarItem {
 type SegmentItem = TreemapDataType & {
   name: string;
   value: number;
-  fill: string;
-};
+ };
 
-interface TreemapNodeProps extends TreemapDataType {
+type TreemapNodeProps = TreemapDataType & {
+  depth: number;
   x: number;
   y: number;
   width: number;
   height: number;
   index: number;
-  depth: number;
-  fill: string;
   name: string;
   value: number;
-}
+  fill?: string;
+};
 
-const CustomizedTreemapContent: React.FC<TreemapNodeProps> = ({
-  x,
-  y,
-  width,
-  height,
-  name,
-  value,
-  fill,
-  depth,
-}) => {
+const getContrastingTextColor = (hexColor?: string): string => {
+  if (!hexColor) return "#111827"; // Tailwind slate-900
+
+  const color = hexColor.replace("#", "");
+  if (color.length !== 6) return "#111827";
+
+  const r = parseInt(color.substring(0, 2), 16);
+  const g = parseInt(color.substring(2, 4), 16);
+  const b = parseInt(color.substring(4, 6), 16);
+
+  // Perceived luminance formula
+  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  return luminance > 0.6 ? "#1f2937" : "#f9fafb"; // slate-700 / gray-50
+};
+
+const renderSegmentTreemapContent = (
+  props: TreemapNodeProps,
+): React.ReactElement => {
+  const { depth, x, y, width, height, name, value, fill } = props;
+
   if (depth === 0) {
-    return null;
+    return <g />;
   }
 
+  const fontSize = Math.max(12, Math.min(20, Math.sqrt(width * height) / 8));
+  const textColor = getContrastingTextColor(fill);
   const centerX = x + width / 2;
   const centerY = y + height / 2;
-  const textColor = depth < 2 ? "#ffffff" : "#000000";
+  const formattedValue = Number.isFinite(value) ? value.toLocaleString() : "-";
+  const showStackedText = width > 120 && height > 60;
 
   return (
     <g>
@@ -122,23 +134,47 @@ const CustomizedTreemapContent: React.FC<TreemapNodeProps> = ({
         y={y}
         width={width}
         height={height}
-        fill={fill}
-        stroke="#ffffff"
-        strokeWidth={1}
-        rx={4}
-        ry={4}
+        fill="none"
+        stroke="rgba(255,255,255,0.6)"
+        strokeWidth={2}
+        pointerEvents="none"
       />
-      {width > 30 && height > 20 && (
+      {showStackedText ? (
+        <>
+          <text
+            x={centerX}
+            y={centerY - 6}
+            textAnchor="middle"
+            fill={textColor}
+            fontSize={fontSize}
+            fontWeight={600}
+            pointerEvents="none"
+          >
+            {name}
+          </text>
+          <text
+            x={centerX}
+            y={centerY + fontSize / 1.5}
+            textAnchor="middle"
+            fill={textColor}
+            fontSize={Math.max(fontSize - 2, 10)}
+            fontWeight={500}
+            pointerEvents="none"
+          >
+            {formattedValue}
+          </text>
+        </>
+      ) : (
         <text
           x={centerX}
           y={centerY}
-          fill={textColor}
           textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize={12}
+          fill={textColor}
+          fontSize={Math.max(fontSize - 2, 10)}
           fontWeight={600}
+          pointerEvents="none"
         >
-          {`${name}: ${value}`}
+          {`${name}: ${formattedValue}`}
         </text>
       )}
     </g>
@@ -590,7 +626,7 @@ const Dashboard: React.FC = () => {
                     nameKey="name"
                     stroke="#ffffff"
                     isAnimationActive={false}
-                    content={<CustomizedTreemapContent x={0} y={0} width={0} height={0} index={0} depth={0} fill={""} name={""} value={0} />}
+                    content={renderSegmentTreemapContent}
                   />
                 </ResponsiveContainer>
               ) : (
